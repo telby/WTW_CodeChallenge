@@ -1,0 +1,11 @@
+server {
+	listen 3200;
+	listen [::]:3200;
+	server_name example.com www.example.com;
+	root /var/www/example.com/;
+	location / {
+		proxy_pass http://localhost:3400
+		try_files $uri $uri/ =404;
+		error_page 404 /ruhroh.html;
+	}
+}

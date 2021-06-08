@@ -1,0 +1,55 @@
+---
+- hosts: webservers
+  become: yes
+  tasks:
+  - name: "apt-get update"
+    apt:
+      update_cache: yes
+  
+  - name: "install nginx"
+    apt:
+      name: nginx
+      state: latest
+
+  - name: "create www directory"
+    file:
+      path: /var/www/example.com
+      state: directory
+      mode: '0775'
+      owner: ansible
+      group: ansible
+  
+  - name: "remove default site"
+    file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
+    notify: restart nginx
+  
+  - name: "copy nginx config"
+    template:
+      src: /mnt/c/Users/Tomelot/Desktop/Git/CodeChallenge/playbook/templates/nginx.config.j2
+      dest: /etc/nginx/sites-enabled/example.com
+      owner: root
+      group: root
+      mode: 0644
+    
+  - name:  "copy custom 404"  
+    ansible.builtin.copy:
+      src: /mnt/c/Users/Tomelot/Desktop/Git/CodeChallenge/playbook/html/ruhroh.html
+      dest: /var/www/example.com/html/
+      owner: ansible
+      group: ansible
+      mode: 0644
+    notify: restart nginx
+
+  - name: "start nginx at reboot"
+    systemd:
+      name: nginx
+      enabled: yes
+      masked: no
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
