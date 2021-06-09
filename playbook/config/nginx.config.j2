@@ -3,13 +3,15 @@ server {
 	listen [::]:3200;
 	server_name example.com www.example.com;
 	root /var/www/example.com/;
-	error_page 404 /custom_404.html
-	location / {
-		proxy_pass http://localhost:3400
-		try_files $uri $uri/ =404;
+	error_page 404 /custom_404.html;
+	location = / {
+		proxy_pass http://localhost:3400;
 	}
 	location = /custom_404.html {
 		root /usr/share/nginx/html;
 		internal;
+	}
+	location ~ /* {
+		try_files $uri $uri/ =404;
 	}
 }

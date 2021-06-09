@@ -24,14 +24,15 @@
   
   - name: "Apply nginx config"
     template:
-      src: files/nginx.config.j2
+      src: config/nginx.config.j2
       dest: /etc/nginx/sites-available/default
     notify: restart nginx  
       
   - name:  "copy custom 404"  
     ansible.builtin.copy:
-      src: files/custom_404.html
+      src: html/
       dest: /usr/share/nginx/html/
+      directory_mode: yes
 
   - name: "start nginx at reboot"
     systemd:
