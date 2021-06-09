@@ -7,20 +7,6 @@
       name: nginx
       state: latest
       update_cache: yes
-
-#  - name: "create www directory"
-#    file:
-#      path: /var/www/example.com
-#      state: directory
-#      mode: '0775'
-#      owner: ansible
-#      group: ansible
-  
-#  - name: "remove default site"
-#    file:
-#      path: /etc/nginx/sites-enabled/default
-#      state: absent
-#    notify: restart nginx
   
   - name: "Apply nginx config"
     template:
