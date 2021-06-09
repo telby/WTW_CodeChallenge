@@ -2,7 +2,7 @@
 - hosts: webservers
   become: yes
   tasks:
-    - name: "update app cache and install nginx"
+  - name: "update app cache and install nginx"
     apt:
       name: nginx
       state: latest
@@ -30,8 +30,8 @@
       
   - name:  "copy custom 404"  
     ansible.builtin.copy:
-      src: files/ruhroh.html
-      dest: /var/www/default/html/
+      src: files/custom_404.html
+      dest: /usr/share/nginx/html/
 
   - name: "start nginx at reboot"
     systemd:
