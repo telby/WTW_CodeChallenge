@@ -16,4 +16,4 @@
 ## WOULD NEVER DO THIS IN PRODUCTION ENVIRONMENT - Would use SSH Keys
 [webservers:vars]
 ansible_user=ansible
-ansible_password=BuckyBadger
+ansible_password=Password
