@@ -5,7 +5,7 @@ server {
 	root /var/www/example.com/;
 	error_page 404 /custom_404.html;
 	location = / {
-		proxy_pass https://google.com;
+		proxy_pass http:localhost:3400;
 	}
 	location = /custom_404.html {
 		root /usr/share/nginx/html;
